@@ -1,2 +1,2 @@
-# Encoding_hwk2
-This is our second comprehensive homework for Encoding Theory. 
+# Encoding_hwk3
+This is our third comprehensive homework for Encoding Theory. 
