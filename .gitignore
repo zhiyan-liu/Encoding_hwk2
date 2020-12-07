@@ -3,3 +3,11 @@ matlab/imgs/
 
 # .mat files
 *.mat
+
+# generated BMP files
+matlab/*.bmp
+
+# generate binary texts
+matlab/bin.txt
+
+
