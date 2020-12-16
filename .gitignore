@@ -10,4 +10,7 @@ matlab/*.bmp
 # generate binary texts
 matlab/bin.txt
 
+# temp files
+*.asv
+
 

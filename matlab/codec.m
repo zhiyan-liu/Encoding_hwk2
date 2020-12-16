@@ -50,13 +50,13 @@ switch blockOption
 end
 
 %Quantization option
-i_quant = 0;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
+i_quant = 1;    % 0: uniform quantization   1: H.261 quantization  2: custom quantization
 switch i_quant
     case 0
-        quant_step = 1;   % 1-255
+        quant_step = 20;   % 1-255
         fprintf("uniform quantization\tquant_step=%d\n",quant_step);
     case 1
-        quant_factor = 1; % 1-100
+        quant_factor = 50; % 1-100
         fprintf("H.261 quantization\tquant_factor=%d\n",quant_factor);
     case 2
         quant_array = [10, 20, 30, 40];   % your quantization array
@@ -64,7 +64,7 @@ switch i_quant
 end
 
 %VLC option
-vlcRadio = 1; % 0:one symbol 1:two connected symbols
+vlcRadio = 0; % 0:one symbol 1:two connected symbols
 onesymbol_coodbook_file = "table.txt";
 twosymbol_coodbook_file = "table2.txt";
 
@@ -82,7 +82,7 @@ srcImage = imread(strcat(pathName, fileName));
 infoSrcImage = imfinfo(strcat(pathName, fileName));
 if ~isempty(srcImage)
     srcImgBits = infoSrcImage.Width*infoSrcImage.Height*infoSrcImage.BitDepth; %bits of the input image
-    fprintf("input image bit:%d\n",srcImgBits);
+    fprintf("input image width:%d, height:%d, bit:%d\n",infoSrcImage.Width, infoSrcImage.Height, srcImgBits);
 else
     fprintf("Input image load error!!\n");
     return;
