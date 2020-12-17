@@ -1,6 +1,6 @@
-src_quant_conf.type = 'custom'; % 'h.261', 'custom'
+src_quant_conf.type = 'uniform'; % 'h.261', 'custom'
 if strcmp(src_quant_conf.type, 'uniform')
-    src_quant_conf.step = 128;
+    src_quant_conf.step = 4;
 elseif strcmp(src_quant_conf.type, 'h.261')
     src_quant_conf.factor = 100;
 elseif strcmp(src_quant_conf.type, 'custom')

@@ -1,4 +1,6 @@
-function [bitstream, length_table] = src_vlc(procImage, src_vlc_conf)
+function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
+    width = size(procImage,2);
+    height = size(procImage,1);
     slice_height = src_vlc_conf.slice_height;
     slice_start_code = src_vlc_conf.slice_start_code;
     if strcmp(src_vlc_conf.num_symbols, 'single')
@@ -27,6 +29,9 @@ function [bitstream, length_table] = src_vlc(procImage, src_vlc_conf)
         elseif strcmp(src_vlc_conf.codebook_type, 'by-case')
             % TODO: Prepare the codebook from procImage using Huffman coding 
         end
+        % Return codebook for de-VLC use
+        codebook.num_1 = num_1;
+        codebook.code_1 = code_1;
         % Perform VLC coding according to codebook
         bin_file = fopen('bin.txt', 'wb');
         for y=1:size(procImage, 1)   %height
@@ -53,7 +58,7 @@ function [bitstream, length_table] = src_vlc(procImage, src_vlc_conf)
             length_table = length_table+length(char(code_1(m)));
             length_table = length_table+length(dec2bin(num_1(m)));
         end
-        length_table = length_table+length(char(code_1(end)));
+        codebook.length_table = length_table+length(char(code_1(end)));
         
     elseif strcmp(src_vlc_conf.num_symbols, 'double')
         % Prepare codebook
@@ -89,6 +94,10 @@ function [bitstream, length_table] = src_vlc(procImage, src_vlc_conf)
         elseif strcmp(src_vlc_conf.codebook_type, 'by-case')
             % TODO: Prepare the codebook from procImage using Huffman coding 
         end
+        % Return codebook for de-VLC use
+        codebook.num_2_1 = num_2_1;
+        codebook.num_2_2 = num_2_2;
+        codebook.code_2 = code_2;
         % Perform VLC coding according to codebook
         bin_file = fopen('bin.txt', 'wb');
         for y=1:size(procImage, 1)   %height

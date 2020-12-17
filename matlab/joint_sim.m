@@ -23,7 +23,13 @@ if infoSrcImage.ColorType == "truecolor"
 end
 
 procImage = src_quant(srcImage, src_quant_conf);
-[transmit_bitstream, length_table] = src_vlc(procImage, src_vlc_conf);
+[transmit_bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf);
 
-Ebn0 = 3;   % in dB.
-recv_bitstream = channel_transmit(transmit_bitstream, channel_conf, Ebn0)
+Ebn0 = 3.5;   % in dB.
+recv_bitstream = channel_transmit(transmit_bitstream, channel_conf, Ebn0);
+
+recImage = src_decode(recv_bitstream, codebook, height, width, src_vlc_conf);
+
+isequal(procImage, recImage)
+
+PSNR(srcImage,recImage)
