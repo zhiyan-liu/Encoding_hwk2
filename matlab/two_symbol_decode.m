@@ -77,7 +77,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
             disable = false;
             for i = 1:maxCodeLength
                 if current + i-1 > length(data)
-                    printf("Two symbol decode:\t Error1! No enough bits!\n");
+                    fprintf("Two symbol decode:\t Error1! No enough bits!\n");
                     return;
                 end
                 tmp = data(current:current+i-1);
@@ -119,7 +119,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
             
             if ~disable && ~done
                 if(current+escapeLength-1)>length(data)
-                    printf("Two symbol decode:\tError2! No enough bits!n");
+                    fprintf("Two symbol decode:\tError2! No enough bits!n");
                     return;
                     
                 end
@@ -148,7 +148,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
                     if ~disable
                         current = current+escapeLength;
                         if (current+15) > length(data)
-                            printf("Two symbol decode:\tError3! No enough bits!\n");
+                            fprintf("Two symbol decode:\tError3! No enough bits!\n");
                             return;
                             
                         end
@@ -193,7 +193,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
                 if nowx == width-1
                     if (slice_idx*slice_height+nowy)==height
                         if current <= length(data)
-                            printf("Two symbol decode:\tError4! Too many bits!\n");
+                            fprintf("Two symbol decode:\tError4! Too many bits!\n");
                             return;
                         else
                             complete = true;
@@ -215,7 +215,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
     end
     
     if (~complete&&(current==length(data)))&&(((slice_idx*slice_height+nowy)*width+nowx+2)<=height*width)
-        printf("Two symbol decode:\tError5! No enough bits!\n");
+        fprintf("Two symbol decode:\tError5! No enough bits!\n");
         return;
     end
     
