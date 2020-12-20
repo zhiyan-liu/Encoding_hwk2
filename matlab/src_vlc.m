@@ -28,6 +28,9 @@ function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
             fclose(fid);
         elseif strcmp(src_vlc_conf.codebook_type, 'by-case')
             % TODO: Prepare the codebook from procImage using Huffman coding 
+            codebook = entropy_coding(procImage, 1);
+            num_1 = codebook.num_1;
+            code_1 = codebook.code_1;
         end
         % Return codebook for de-VLC use
         codebook.num_1 = num_1;
@@ -93,6 +96,10 @@ function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
             fclose(fid);
         elseif strcmp(src_vlc_conf.codebook_type, 'by-case')
             % TODO: Prepare the codebook from procImage using Huffman coding 
+            codebook = entropy_coding(procImage, 2);
+            num_2_1 = codebook.num_2_1;
+            num_2_2 = codebook.num_2_2;
+            code_2 = codebook.code_2;
         end
         % Return codebook for de-VLC use
         codebook.num_2_1 = num_2_1;
