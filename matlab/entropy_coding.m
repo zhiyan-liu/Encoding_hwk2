@@ -25,10 +25,6 @@ elseif num_symbol == 2
             symbol_list{n*x+y-n} = [value_list(x), value_list(y)];
             prob_list(n*x+y-n) = sum(sum((odd_cols==value_list(x)) & (even_cols == value_list(y))))/L;
         end
-        symbol_list(prob_list == 0) = [];
-        prob_list(prob_list == 0) = [];
-        X = huffman_coding(symbol_list,prob_list, p_esc);
-        codebook = gen_codebook(X, 1, 0);
     end
     symbol_list(prob_list == 0) = [];
     prob_list(prob_list == 0) = [];

@@ -13,4 +13,7 @@ matlab/bin.txt
 # temp files
 *.asv
 
+# sim data
+matlab/data/
+
 
