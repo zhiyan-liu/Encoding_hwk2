@@ -219,8 +219,8 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
         return;
     end
     
-    figure('name', 'Rec Image', 'NumberTitle', 'off');
-    imshow(recImage,[]);
+    % figure('name', 'Rec Image', 'NumberTitle', 'off');
+    % imshow(recImage,[]);
     
     if complete
         disp("Reconstruction completed!\n");
