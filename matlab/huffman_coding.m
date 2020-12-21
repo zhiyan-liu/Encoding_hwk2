@@ -1,4 +1,4 @@
-function [X] = huffmanCoding(symbol_list,prob_list,e)
+function [X] = huffman_coding(symbol_list,prob_list,e)
 
 %symbol_list = {0,10,20,30,40,50,60,70,80,90,100,110,120,130,140};
 %prob_list=[0 0 34 200 50 820 650 1300 1100 430 0 56 700  43 0 0];
