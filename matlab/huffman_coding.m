@@ -1,28 +1,21 @@
-function X = huffmanCoding(symbol_list, prob_list, e)
-
-    sum=0;
-    probability_sum=0;
+function X = huffman_coding(symbol_list, prob_list, p_esc)
+% p_esc: probability reserved for escape code.
     len=length(prob_list);
-    Op_List=prob_list;
     
-    for k=1:len
-        sum=sum+Op_List(k);
-    end
-    for l=1:len
-        Op_List(l)=Op_List(l)/sum;
-    end
+    Op_List = prob_list / sum(prob_list);
     [Op_List,ix]=sort(Op_List,'descend');
+    probability_sum=0;
     for m=len:-1:1  
-        if Op_List(m)<e
-            probability_sum=probability_sum+Op_List(m);
-        end
-        if Op_List(m)>=e
+        t = Op_List(m) + probability_sum;
+        if t<p_esc
+            probability_sum = t;
+        else
             break;
         end
     end
-    Op_List_new=[Op_List(1:m) probability_sum];
+    Op_List_new = [Op_List(1:m) probability_sum];
     len_new=length(Op_List_new);
-
+    
     Map=[];
     for i=1:len_new-1
         Map=[Map;blanks(len_new)]; 
