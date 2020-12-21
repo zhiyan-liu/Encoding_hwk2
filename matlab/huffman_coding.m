@@ -26,22 +26,22 @@ end
 Op_List_new=[Op_List(1:m) probability_sum];
 len_new=length(Op_List_new);
 
-Map=[];%MapÓÃÓÚ½øĞĞhuffman ±àÂë,ÏÂÃæÉú³É(n-1)*(n*n)µÄ¾ØÕó
+Map=[];%Mapç”¨äºè¿›è¡Œhuffman ç¼–ç ,ä¸‹é¢ç”Ÿæˆ(n-1)*(n*n)çš„çŸ©é˜µ
 for i=1:len_new-1
     Map=[Map;blanks(len_new)]; 
 end
 
 for i=1:len_new-1
-    [Op_List_new,e]=sort(Op_List_new);% e ¼ÇÂ¼ÁËÔ­À´µÄË³Ğò
+    [Op_List_new,e]=sort(Op_List_new);% e è®°å½•äº†åŸæ¥çš„é¡ºåº
     
-    %e(1)e(2)¾ÍÊÇºÏ²¢µÄÁ½¸öÊı,Ğ¡µÄ¸³1´óµÄ¸³0
+    %e(1)e(2)å°±æ˜¯åˆå¹¶çš„ä¸¤ä¸ªæ•°,å°çš„èµ‹1å¤§çš„èµ‹0
     Map(i,e(1))='1';
     Map(i,e(2))='0';
-    %µÚÒ»µÚ¶ş¼Óµ½µÚ¶ş¸ö£¬µÚÒ»¸ö×÷·Ï
+    %ç¬¬ä¸€ç¬¬äºŒåŠ åˆ°ç¬¬äºŒä¸ªï¼Œç¬¬ä¸€ä¸ªä½œåºŸ
     Op_List_new(2)=Op_List_new(1)+Op_List_new(2);
     Op_List_new(1)=len_new;
     
-    %Î»ÖÃ»¹Ô­
+    %ä½ç½®è¿˜åŸ
     Back_List=zeros(1,len_new);
     for j=1:len_new
         Back_List(e(j))=Op_List_new(j);
@@ -49,7 +49,7 @@ for i=1:len_new-1
     Op_List_new= Back_List; 
 end
 
-x=len_new;y=len_new-1;%²¹È«Map
+x=len_new;y=len_new-1;%è¡¥å…¨Map
 for i=y:-1:1
     for j=1:x
         if Map(i,j)~=' '
@@ -91,9 +91,4 @@ for j=len_new
 end
  
 end
-
-
-
-
-
 
