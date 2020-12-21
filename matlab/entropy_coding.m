@@ -7,7 +7,7 @@ if num_symbol == 1
     for iter = 1:N
         prob_list(iter) = sum(sum(find(image==symbol_list(iter))))/L;
     end
-    X = huffmanCoding(num2cell(symbol_list),prob_list,0.01);
+    X = huffmanCoding(num2cell(symbol_list),prob_list, 0.001);
     codebook = gen_codebook(X, 0, 0);
 elseif num_symbol == 2
     value_list = unique(image)';
