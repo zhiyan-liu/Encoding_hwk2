@@ -24,8 +24,8 @@ if infoSrcImage.ColorType == "truecolor"
 end
 
 %% Start simulations and record R-D curve.
-Ebn0 = 4;   % in dB.
-N_sim = 50;
+Ebn0 = 6;   % in dB.
+N_sim = 100;
 quant_step_arr = [4, 8, 10, 15, 20, 25, 30, 40];
 N_rates = length(quant_step_arr);
 mean_PSNR = zeros(N_rates, 1);
@@ -39,7 +39,7 @@ for r_idx = 1:N_rates
     [transmit_bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf);
     psnr_arr = zeros(N_sim, 1);
     
-    parfor sim_idx = 1:N_sim
+    for sim_idx = 1:N_sim
         recv_bitstream = channel_transmit(transmit_bitstream, channel_conf, Ebn0);
         recImage = src_decode(recv_bitstream, codebook, height, width, src_vlc_conf);
         % isequal(procImage, recImage)
@@ -50,7 +50,7 @@ for r_idx = 1:N_rates
 end
 
 %% Plot!!
-plot(rates, mean_PSNR);
+plot(rates, mean_PSNR, '-x');
 title(strcat('R-D curve @ Ebn0 = ',num2str(Ebn0),' dB'));
 xlabel('Length of bitstream');
 ylabel('Average PSNR (dB)');
