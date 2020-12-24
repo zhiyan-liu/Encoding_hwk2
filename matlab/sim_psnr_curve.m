@@ -24,16 +24,19 @@ if infoSrcImage.ColorType == "truecolor"
 end
 
 %% Start simulations and record R-D curve.
-Ebn0 = 2;   % in dB.
-N_sim = 100;
-quant_step_arr = [4, 8, 10, 15, 20, 25, 30, 40];
-N_rates = length(quant_step_arr);
+Ebn0 = 4;   % in dB.
+N_sim = 20;
+quant_factor_arr = [10, 15, 20, 40, 75, 100];
+N_rates = length(quant_factor_arr);
+% quant_step_arr = [4, 8, 10, 15, 20, 25, 30, 40];
+% N_rates = length(quant_step_arr);
 mean_PSNR = zeros(N_rates, 1);
 rates = zeros(N_rates, 1);          % cnt. of encoded bits.
 
 for r_idx = 1:N_rates
     temp_src_quant_conf = src_quant_conf;
-    temp_src_quant_conf.step = quant_step_arr(r_idx);
+    temp_src_quant_conf.factor = quant_factor_arr(r_idx);
+    % temp_src_quant_conf.step = quant_step_arr(r_idx);
     
     procImage = src_quant(srcImage, temp_src_quant_conf);
     [transmit_bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf);
@@ -42,6 +45,9 @@ for r_idx = 1:N_rates
     parfor sim_idx = 1:N_sim
         recv_bitstream = channel_transmit(transmit_bitstream, channel_conf, Ebn0);
         recImage = src_decode(recv_bitstream, codebook, height, width, src_vlc_conf);
+        if strcmp(src_quant_conf.type, 'h.261')
+            recImage = h261_inv(recImage, temp_src_quant_conf);
+        end
         % isequal(procImage, recImage)
         psnr_arr(sim_idx) = PSNR(srcImage, recImage);
     end
@@ -50,9 +56,11 @@ for r_idx = 1:N_rates
 end
 
 %% Plot!!
+figure;
 plot(rates, mean_PSNR, '-x');
 title(strcat('R-D curve @ Ebn0 = ',num2str(Ebn0),' dB'));
 xlabel('Length of bitstream');
 ylabel('Average PSNR (dB)');
+grid on;
 
-save(strcat('data/',num2str(Ebn0),'.mat'));
+save(strcat('data/',num2str(Ebn0),'_h261.mat'));

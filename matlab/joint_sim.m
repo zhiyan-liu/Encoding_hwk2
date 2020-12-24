@@ -25,11 +25,15 @@ end
 procImage = src_quant(srcImage, src_quant_conf);
 [transmit_bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf);
 
-Ebn0 = 1;   % in dB.
+Ebn0 = 4;   % in dB.
 recv_bitstream = channel_transmit(transmit_bitstream, channel_conf, Ebn0);
 
 recImage = src_decode(recv_bitstream, codebook, height, width, src_vlc_conf);
 
-isequal(procImage, recImage)
+if strcmp(src_quant_conf.type, 'h.261')
+    recImage = h261_inv(recImage, src_quant_conf);
+end
+
+isequal(srcImage, recImage)
 
 PSNR(srcImage,recImage)
