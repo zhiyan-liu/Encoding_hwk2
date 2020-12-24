@@ -52,7 +52,7 @@ function [procImage] = src_quant(srcImage, src_quant_conf)
                 procImage(8*(i-1)+1:8*(i-1)+8, 8*(j-1)+1:8*(j-1)+8) = reshape(img_block64, [8,8]);
             end
         end
-        procImage = uint8(procImage);
+        procImage = uint8(procImage + 128);
         % imshow(procImage);
     elseif strcmp(src_quant_conf.type, 'custom')
         quant_array = src_quant_conf.quant_array;
