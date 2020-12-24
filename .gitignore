@@ -7,8 +7,8 @@ matlab/imgs/
 # generated BMP files
 matlab/*.bmp
 
-# generate binary texts
-matlab/bin.txt
+# generated texts && codebooks
+matlab/*.txt
 
 # temp files
 *.asv
