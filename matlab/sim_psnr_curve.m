@@ -25,7 +25,7 @@ end
 
 %% Start simulations and record R-D curve.
 Ebn0 = 4;   % in dB.
-N_sim = 10;
+N_sim = 100;
 quant_step_arr = [4, 8, 10, 15, 20, 25, 30, 40];
 N_rates = length(quant_step_arr);
 mean_PSNR = zeros(N_rates, 1);

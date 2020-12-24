@@ -104,6 +104,10 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                         
                         if ~disable
+                            slice_err = ~(slice_idx < ceil(height/slice_height));
+                            if slice_err
+                                break;
+                            end
                             recImage(slice_idx*slice_height+nowy, nowx) = num_2_1(j);
                             recImage(slice_idx*slice_height+nowy, nowx+1) = num_2_2(j);
                             current = current+i;
@@ -112,7 +116,7 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                     end
                 end
-                if done
+                if done || slice_err
                     break;
                 end
             end
@@ -173,6 +177,11 @@ function recImage= two_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                         
                         if ~disable
+                            slice_err = ~(slice_idx < ceil(height/slice_height));
+                            if slice_err
+                                break;
+                            end
+                             
                             tmp = data(current : current+7);
                             current = current+8;
                             para = bin2dec(tmp);
