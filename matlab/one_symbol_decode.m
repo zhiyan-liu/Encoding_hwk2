@@ -101,6 +101,10 @@ function recImage = one_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                         
                         if ~disable     % bits in codebook and get the pix in num_1
+                            slice_err = ~(slice_idx < ceil(height/slice_height));
+                            if slice_err
+                                break;
+                            end
                             recImage(slice_idx*slice_height+nowy, nowx) = num_1(j);
                             current = current+i;
                             done = true;
@@ -108,7 +112,7 @@ function recImage = one_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                     end
                 end
-                if done
+                if done || slice_err
                     break;
                 end
             end
@@ -165,6 +169,10 @@ function recImage = one_symbol_decode(bitstream, codebook, slice_height, ...
                         end
                         
                         if ~disable  % pix in 8 bit
+                            slice_err = ~(slice_idx < ceil(height/slice_height));
+                            if slice_err
+                                break;
+                            end
                             tmp = data(current: current+7);
                             current = current+8;
                             para = bin2dec(tmp);
@@ -181,7 +189,7 @@ function recImage = one_symbol_decode(bitstream, codebook, slice_height, ...
                 if nowx == width
                     if (slice_idx*slice_height+nowy)==height
                         if current <= length(data)  % redundant bits
-                            fprintf("One symbol decode:\t Error4! Too many bits! \tPSNR:%f\n");
+                            fprintf("One symbol decode:\t Error4! Too many bits!\n");
                             return;
                         else
                             complete = true;
