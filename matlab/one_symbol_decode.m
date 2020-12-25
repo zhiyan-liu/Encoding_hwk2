@@ -215,8 +215,8 @@ function recImage = one_symbol_decode(bitstream, codebook, slice_height, ...
         return;
     end
     
-    figure('name', 'Rec Image', 'NumberTitle', 'off');
-    imshow(recImage,[]);
+    %figure('name', 'Rec Image', 'NumberTitle', 'off');
+    %imshow(recImage,[]);
     
     if complete
         fprintf("Reconstruction completed!\n");

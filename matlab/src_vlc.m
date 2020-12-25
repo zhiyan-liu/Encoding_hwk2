@@ -1,4 +1,7 @@
 function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
+    escape_syms_cnt = 0;
+    total_syms_cnt = 0;
+    
     width = size(procImage,2);
     height = size(procImage,1);
     slice_height = src_vlc_conf.slice_height;
@@ -45,11 +48,13 @@ function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
             end
             for x = 1:size(procImage, 2) %width
                 pix = procImage(y,x);
+                total_syms_cnt = total_syms_cnt + 1;
                 if ismember(pix, num_1)     % pix in num_1, encode corresponding code in code_1, otherwise, encode escapecode and pix
                     fwrite(bin_file, code_1(find(num_1==pix)), 'uint8');
                 else
                     fwrite(bin_file, code_1(end), 'uint8');
                     fwrite(bin_file, dec2bin(pix,8), 'uint8');
+                    escape_syms_cnt = escape_syms_cnt + 1;
                 end
             end
         end
@@ -116,6 +121,7 @@ function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
             for x = 1:size(procImage, 2)/2 %width
                 pix1 = procImage(y, 2*x-1);
                 pix2 = procImage(y, 2*x);
+                total_syms_cnt = total_syms_cnt + 1;
                 if ismember(pix1, num_2_1) && ismember(pix2,num_2_2(find(num_2_1==pix1)))
     %                 fprintf("x:%d\ta:%d\n",x,find(num_2_1==pix1));
                     temp_index = find(num_2_1==pix1);
@@ -124,6 +130,7 @@ function [bitstream, codebook, height, width] = src_vlc(procImage, src_vlc_conf)
                     fwrite(bin_file, code_2(end), 'uint8');
                     fwrite(bin_file, dec2bin(pix1,8), 'uint8');
                     fwrite(bin_file, dec2bin(pix2,8), 'uint8');
+                    escape_syms_cnt = escape_syms_cnt + 1;
                 end
             end
         end
