@@ -14,8 +14,7 @@ function [procImage] = src_quant(srcImage, src_quant_conf)
         procImage(procImage<0)=0;
         
         %show quantizationed image
-        h_proc = figure('name', 'Quant Image', 'NumberTitle', 'off');
-        imshow(procImage);
+        % imshow(procImage);
     elseif strcmp(src_quant_conf.type, 'h.261')
         quant_factor = src_quant_conf.factor;
         if quant_factor > 100 || quant_factor < 1
@@ -53,9 +52,12 @@ function [procImage] = src_quant(srcImage, src_quant_conf)
                 procImage(8*(i-1)+1:8*(i-1)+8, 8*(j-1)+1:8*(j-1)+8) = reshape(img_block64, [8,8]);
             end
         end
-        procImage = uint8(procImage);
-        h_proc = figure('name', 'Quant Image', 'NumberTitle', 'off');
-        imshow(procImage);
+        if max(procImage(:)) > 127 || min(procImage(:)) < - 128
+            disp("DCT coefficient exceeds 8bit. Please use a larger quant factor. ");
+            return;
+        end
+        procImage = uint8(procImage + 128);
+        % imshow(procImage);
     elseif strcmp(src_quant_conf.type, 'custom')
         quant_array = src_quant_conf.quant_array;
         %%customed quantization
@@ -114,8 +116,7 @@ function [procImage] = src_quant(srcImage, src_quant_conf)
                 procImage(y,x) = img_pixel;
             end
         end
-        h_proc = figure('name', 'Quant Image', 'NumberTitle', 'off');
-        imshow(procImage);
+        % imshow(procImage);
     end
 end
 

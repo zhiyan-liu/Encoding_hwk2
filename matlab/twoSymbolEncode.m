@@ -80,9 +80,10 @@ if ~isempty(bin_file)
         for x = 1:size(procImage, 2)/2 %width
             pix1 = procImage(y, 2*x-1);
             pix2 = procImage(y, 2*x);
-            if ismember(pix1, num_2_1) && isequal(pix2,num_2_2(find(num_2_1==pix1)))
+            if ismember(pix1, num_2_1) && ismember(pix2,num_2_2(find(num_2_1==pix1)))
 %                 fprintf("x:%d\ta:%d\n",x,find(num_2_1==pix1));
-                fwrite(bin_file, code_2(find(num_2_1==pix1)), 'uint8');
+                temp_index = find(num_2_1==pix1);
+                fwrite(bin_file, code_2(temp_index(find(num_2_2(find(num_2_1==pix1))==pix2))), 'uint8');
             else
                 fwrite(bin_file, code_2(end), 'uint8');
                 fwrite(bin_file, dec2bin(pix1,8), 'uint8');
